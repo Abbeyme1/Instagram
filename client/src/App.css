@@ -1,0 +1,17 @@
+a {
+  color: black !important;
+}
+
+/* label underline focus color */
+input:focus {
+  border-bottom: 0 solid transparent !important;
+  box-shadow: 0 0 0 0 transparent !important;
+}
+
+.btn:focus {
+  color: red !important;
+}
+
+* {
+  background-color: #fafafa;
+}

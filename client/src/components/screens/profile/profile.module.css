@@ -1,0 +1,38 @@
+.profile {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.profileInfo {
+  display: flex;
+  justify-content: space-around;
+  margin: 18px 0;
+  padding-bottom: 30px;
+  border-bottom: 1.5px solid rgba(173, 173, 173, 0.3);
+}
+
+.profileImage {
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  width: 123%;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 100%;
+  overflow: hidden;
+}
+.gallery img {
+  margin: 2px;
+  width: 30%;
+  display: inline;
+}
