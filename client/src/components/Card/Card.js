@@ -12,13 +12,19 @@ const Card = () => {
         <img src="https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" />
       </div>
       <div className={classes.cardContent}>
+        <i className="material-icons" style={{ color: "red" }}>
+          favorite
+        </i>
+
         <p>500 likes</p>
         <div className={classes.description}>
-          <h6>name</h6>
-          <p>this is amazing post</p>
+          <h6 className={classes.name}>Username</h6>
+          <h6>this is amazing post</h6>
         </div>
-
-        <input type="text" placeholder="add comment" />
+        <div className={classes.comment}>
+          <input type="text" placeholder="Add a comment.." />
+          <button>Post</button>
+        </div>
       </div>
     </div>
   );

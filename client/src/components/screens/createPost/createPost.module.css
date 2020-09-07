@@ -1,0 +1,68 @@
+.createPost {
+  background-color: white;
+  max-width: 30%;
+  margin: 30px auto;
+  padding: 10px 25px 25px 25px;
+  box-shadow: 3px 7px 6px rgba(161, 161, 161, 0.609);
+}
+
+.file {
+  background-color: white;
+}
+
+.btn {
+  background-color: white;
+}
+
+.btn {
+  background-color: white;
+}
+
+.input[type="text"] {
+  background-color: red;
+}
+
+.input {
+  background-color: white;
+}
+
+.input::-webkit-file-upload-button {
+  visibility: hidden;
+  content: "..";
+}
+
+.input::before {
+  content: "File";
+  display: inline-block;
+  background: white;
+  border: 0.5px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.input:hover::before {
+  border: 0.2px solid black;
+}
+.input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.filePath {
+  background-color: white;
+}
+
+.submit {
+  background-color: rgb(13, 126, 255);
+  border: 0;
+  margin: 0;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  padding: 7px 20px;
+}

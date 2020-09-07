@@ -16,7 +16,7 @@ const Navbar = () => {
         >
           <li>
             <Link to="/signin">
-              <i class="fas fa-home" style={{ color: "black" }}></i>
+              <i className="fas fa-home" style={{ color: "black" }}></i>
             </Link>
           </li>
           <li>
@@ -24,6 +24,9 @@ const Navbar = () => {
           </li>
           <li>
             <Link to="/profile">Profile</Link>
+          </li>
+          <li>
+            <Link to="/create">Create Post</Link>
           </li>
         </ul>
       </div>
