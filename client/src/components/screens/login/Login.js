@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import classes from "./login.module.css";
 import { Link, useHistory } from "react-router-dom";
 import M from "materialize-css";
+import { connect } from 'react-redux';
+import * as actionCreators from '../../../store/actions/index';
 
-const Login = () => {
+const Login = ({ getUser }) => {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,6 +42,7 @@ const Login = () => {
         } else {
           localStorage.setItem("jwt", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
+          getUser(data.user);
           M.toast({
             html: "signedIn success!",
             classes: "#43a047 green darken-1",
@@ -95,4 +98,11 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUser: (user) => dispatch(actionCreators.user(user))
+  }
+
+}
+
+export default connect(null, mapDispatchToProps)(Login);

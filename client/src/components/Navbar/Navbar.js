@@ -1,8 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import classes from "./Navbar.module.css";
+import { connect } from 'react-redux';
+import * as actionCreators from "../../store/actions/index"
 
-const Navbar = () => {
+
+const Navbar = ({ user }) => {
+  const renderList = (user) => {
+    console.log("user is", user);
+    if (user) {
+      return [
+        <li>
+          <Link to="/profile">Profile</Link>
+        </li>,
+        <li>
+          <Link to="/create">Create Post</Link>
+        </li>
+      ]
+    }
+    else {
+      return [
+        <li>
+          <Link to="/signin">
+            <i className="fas fa-home" style={{ color: "black" }}></i>
+          </Link>
+        </li>,
+        <li>
+          <Link to="/signup">Signup</Link>
+        </li>
+      ]
+    }
+  }
+
   return (
     <nav>
       <div className="nav-wrapper white">
@@ -14,24 +43,18 @@ const Navbar = () => {
           className="right"
           style={{ backgroundColor: "white" }}
         >
-          <li>
-            <Link to="/signin">
-              <i className="fas fa-home" style={{ color: "black" }}></i>
-            </Link>
-          </li>
-          <li>
-            <Link to="/signup">Signup</Link>
-          </li>
-          <li>
-            <Link to="/profile">Profile</Link>
-          </li>
-          <li>
-            <Link to="/create">Create Post</Link>
-          </li>
+          {renderList(user)}
+
         </ul>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    user: state
+  }
+}
+
+export default connect(mapStateToProps)(Navbar);
