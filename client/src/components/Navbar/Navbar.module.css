@@ -37,3 +37,14 @@ nav,
 
 .nav-wrapper {
 }
+
+.logout {
+  background-color: rgb(235, 88, 88);
+  color: white !important;
+  text-transform: uppercase;
+}
+
+.logout:hover {
+  background-color: #c62828;
+  color: white !important;
+}

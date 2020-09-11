@@ -1,29 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./Card.module.css";
 
-const Card = () => {
+const Card = ({ data, like, unlike, user, comment, deletePost }) => {
   return (
     <div className={classes.card}>
       <div className={classes.info}>
-        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" />
-        <h6>Username</h6>
+        <img
+          src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+          alt="userPic"
+        />
+        <h6>{data.postedBy.name}</h6>
+        <div className={classes.delete}>
+          <i className="material-icons">delete</i>
+        </div>
       </div>
       <div className={classes.image}>
-        <img src="https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80" />
+        <img
+          src={data.photo}
+          alt="post"
+          onDoubleClick={() => {
+            like(data._id);
+          }}
+        />
       </div>
       <div className={classes.cardContent}>
-        <i className="material-icons" style={{ color: "red" }}>
-          favorite
-        </i>
+        {data.likes.includes(user) ? (
+          <i
+            className="material-icons"
+            style={{ color: "red", cursor: "pointer" }}
+            onClick={() => {
+              unlike(data._id);
+            }}
+          >
+            favorite
+          </i>
+        ) : (
+          <i
+            className="material-icons"
+            style={{ color: "#e5e5e5", cursor: "pointer" }}
+            onClick={() => {
+              like(data._id);
+            }}
+          >
+            favorite
+          </i>
+        )}
 
-        <p>500 likes</p>
+        <p>{data.likes.length} likes</p>
         <div className={classes.description}>
           <h6 className={classes.name}>Username</h6>
-          <h6>this is amazing post</h6>
+          <h6>{data.title}</h6>
+          <p>{data.body}</p>
+        </div>
+        <div className={classes.commentList}>
+          {data.comments.map((comment) => {
+            return (
+              <p>
+                <span style={{ fontWeight: "bold" }}>
+                  {comment.postedBy.name}
+                </span>{" "}
+                {comment.text}
+              </p>
+            );
+          })}
         </div>
         <div className={classes.comment}>
-          <input type="text" placeholder="Add a comment.." />
-          <button>Post</button>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              comment(e.target[0].value, data._id);
+              e.target[0].value = null;
+            }}
+          >
+            <input type="text" placeholder="Add a comment.." />
+            <button>Post</button>
+          </form>
         </div>
       </div>
     </div>

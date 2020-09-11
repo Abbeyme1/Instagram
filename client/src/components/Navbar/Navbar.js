@@ -1,36 +1,49 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import classes from "./Navbar.module.css";
-import { connect } from 'react-redux';
-import * as actionCreators from "../../store/actions/index"
+import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions/index";
+import M from "materialize-css";
 
-
-const Navbar = ({ user }) => {
+const Navbar = ({ user, onLogout }) => {
+  const history = useHistory();
+  const logout = () => {
+    localStorage.clear();
+    onLogout();
+    M.toast({
+      html: "Logged Out!",
+      classes: "#c62828 red darken-1",
+    });
+    return history.push("/signin");
+  };
   const renderList = (user) => {
-    console.log("user is", user);
     if (user) {
       return [
-        <li>
+        <li key="profile">
           <Link to="/profile">Profile</Link>
         </li>,
-        <li>
+        <li key="create">
           <Link to="/create">Create Post</Link>
-        </li>
-      ]
-    }
-    else {
+        </li>,
+        <li key="logout">
+          <Link to="#" onClick={logout} className={classes.logout}>
+            Logout
+          </Link>
+        </li>,
+      ];
+    } else {
       return [
-        <li>
+        <li key="sigin">
           <Link to="/signin">
             <i className="fas fa-home" style={{ color: "black" }}></i>
           </Link>
         </li>,
-        <li>
+        <li key="signup">
           <Link to="/signup">Signup</Link>
-        </li>
-      ]
+        </li>,
+      ];
     }
-  }
+  };
 
   return (
     <nav>
@@ -44,7 +57,6 @@ const Navbar = ({ user }) => {
           style={{ backgroundColor: "white" }}
         >
           {renderList(user)}
-
         </ul>
       </div>
     </nav>
@@ -53,8 +65,14 @@ const Navbar = ({ user }) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state
-  }
-}
+    user: state,
+  };
+};
 
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogout: () => dispatch(actionCreators.clear()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

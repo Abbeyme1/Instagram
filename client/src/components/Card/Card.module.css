@@ -75,7 +75,7 @@
   font-size: 14px;
 }
 
-.comment {
+.comment form {
   padding: 25px 0;
   border-top: 1.3px solid rgba(219, 219, 219);
   background-color: white;
