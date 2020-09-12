@@ -64,20 +64,24 @@ const Home = ({ user }) => {
       .catch((err) => console.log(err));
   };
 
-  const deletePost = (id) => {
-    fetch(`/deletepost/${id}`, {
+  const deletePost = (postId) => {
+    fetch(`/deletepost/${postId}`, {
       method: "delete",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
     })
       .then((res) => res.json())
-      .then((result) => console.log(result))
+      .then((result) => {
+        const newData = data.filter((item) => {
+          return item._id !== result._id;
+        });
+        setData(newData);
+      })
       .catch((err) => console.log(err));
   };
 
   const comment = (text, postId) => {
-    console.log(text, postId);
     fetch("/comment", {
       method: "put",
       headers: {
@@ -102,6 +106,45 @@ const Home = ({ user }) => {
       .catch((err) => console.log(err));
   };
 
+  const deleteComment = (postId, commentId) => {
+    console.log(postId, commentId);
+    fetch(`/deletecomment/${postId}/${commentId}`, {
+      method: "delete",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("Data is ", data);
+        console.log("res is ", result);
+        // console.log("Data is ", data.comments);
+        // console.log("dleete comm ", result);
+        // console.log("dleete comm ", result.comments);
+
+        const newData = data.map((item) => {
+          console.log("item comments ", item.comments);
+          if (item._id == postId) {
+            item = result;
+            console.log(item == result);
+          }
+        });
+
+        setData(newData);
+        // const newData = data.map((item) => {
+        //   if (item._id == result._id) {
+        //     return result;
+        //   } else return item;
+        // });
+        // setData(newData);
+        // const newData = data.filter((item) => {
+        //   return item._id !== result._id;
+        // });
+        // setData(newData);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <div className="home">
       <Navbar />
@@ -114,6 +157,12 @@ const Home = ({ user }) => {
             like={(id) => likePost(id)}
             unlike={(id) => unlikePost(id)}
             comment={(text, postId) => comment(text, postId)}
+            deletePost={(id) => {
+              deletePost(id);
+            }}
+            deleteComment={(postId, commentId) =>
+              deleteComment(postId, commentId)
+            }
           />
         );
       })}

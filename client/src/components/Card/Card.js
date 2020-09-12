@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import classes from "./Card.module.css";
 
-const Card = ({ data, like, unlike, user, comment, deletePost }) => {
+const Card = ({
+  data,
+  like,
+  unlike,
+  user,
+  comment,
+  deletePost,
+  deleteComment,
+}) => {
   return (
     <div className={classes.card}>
       <div className={classes.info}>
@@ -10,18 +18,16 @@ const Card = ({ data, like, unlike, user, comment, deletePost }) => {
           alt="userPic"
         />
         <h6>{data.postedBy.name}</h6>
-        <div className={classes.delete}>
-          <i className="material-icons">delete</i>
-        </div>
+        {user == data.postedBy._id && (
+          <div className={classes.delete} onClick={() => deletePost(data._id)}>
+            <i className="material-icons" style={{ float: "right" }}>
+              delete
+            </i>
+          </div>
+        )}
       </div>
       <div className={classes.image}>
-        <img
-          src={data.photo}
-          alt="post"
-          onDoubleClick={() => {
-            like(data._id);
-          }}
-        />
+        <img src={data.photo} alt="post" />
       </div>
       <div className={classes.cardContent}>
         {data.likes.includes(user) ? (
@@ -60,6 +66,19 @@ const Card = ({ data, like, unlike, user, comment, deletePost }) => {
                   {comment.postedBy.name}
                 </span>{" "}
                 {comment.text}
+                {user == comment.postedBy._id && (
+                  <i
+                    style={{
+                      fontSize: "15px",
+                      marginLeft: "340px",
+                      cursor: "pointer",
+                    }}
+                    className="material-icons"
+                    onClick={() => deleteComment(data._id, comment._id)}
+                  >
+                    delete
+                  </i>
+                )}
               </p>
             );
           })}

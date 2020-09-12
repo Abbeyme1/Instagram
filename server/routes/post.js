@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const requireLogin = require("../middleware/requireLogin");
 const Post = mongoose.model("Post");
+const { ObjectId } = mongoose.Schema.Types;
 
 router.get("/allposts", requireLogin, (req, res) => {
   Post.find()
@@ -51,13 +52,16 @@ router.put("/like", requireLogin, (req, res) => {
     {
       new: true,
     }
-  ).exec((err, result) => {
-    if (err) {
-      return res.status(422).json({ error: err });
-    } else {
-      res.json(result);
-    }
-  });
+  )
+    .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        res.json(result);
+      }
+    });
 });
 
 router.put("/unlike", requireLogin, (req, res) => {
@@ -69,13 +73,16 @@ router.put("/unlike", requireLogin, (req, res) => {
     {
       new: true,
     }
-  ).exec((err, result) => {
-    if (err) {
-      return res.status(422).json({ error: err });
-    } else {
-      res.json(result);
-    }
-  });
+  )
+    .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        res.json(result);
+      }
+    });
 });
 
 router.put("/comment", requireLogin, (req, res) => {
@@ -110,12 +117,41 @@ router.delete("/deletepost/:postId", requireLogin, (req, res) => {
       if (err || !post) {
         return res.status(422).json({ error: err });
       }
+
       if (post.postedBy._id.toString() === req.user._id.toString()) {
         post
           .remove()
-          .then((result) => res.json({ message: "successfully deleted!" }))
-          .catch((err) => console.log(err));
+          .then((result) => {
+            res.json(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     });
 });
+
+router.delete("/deletecomment/:postId/:commentId", requireLogin, (req, res) => {
+  Post.findByIdAndUpdate(
+    { _id: req.params.postId },
+    {
+      $pull: { comments: { _id: req.params.commentId } },
+    },
+    {
+      safe: true,
+      multi: true,
+    }
+  )
+    .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        console.log(result);
+        res.json(result);
+      }
+    });
+});
+
 module.exports = router;

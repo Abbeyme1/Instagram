@@ -93,3 +93,9 @@
   background-color: white;
   border: 0;
 }
+
+.delete i {
+  flex-grow: 1;
+  margin-left: 440px;
+  cursor: pointer;
+}
