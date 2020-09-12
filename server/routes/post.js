@@ -148,7 +148,6 @@ router.delete("/deletecomment/:postId/:commentId", requireLogin, (req, res) => {
       if (err) {
         return res.status(422).json({ error: err });
       } else {
-        console.log(result);
         res.json(result);
       }
     });

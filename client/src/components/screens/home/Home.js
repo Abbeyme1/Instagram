@@ -7,6 +7,7 @@ const Home = ({ user }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    // console.log("[home]");
     fetch("/allposts", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -32,7 +33,7 @@ const Home = ({ user }) => {
       .then((res) => res.json())
       .then((result) => {
         const newData = data.map((item) => {
-          if (item._id == result._id) {
+          if (item._id === result._id) {
             return result;
           } else return item;
         });
@@ -55,7 +56,7 @@ const Home = ({ user }) => {
       .then((result) => {
         //! DIDNT GOT THIS LOGIC COMPLETELY INTO HEAD
         const newData = data.map((item) => {
-          if (item._id == result._id) {
+          if (item._id === result._id) {
             return result;
           } else return item;
         });
@@ -95,9 +96,9 @@ const Home = ({ user }) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         const newData = data.map((item) => {
-          if (item._id == result._id) {
+          if (item._id === result._id) {
             return result;
           } else return item;
         });
@@ -107,7 +108,7 @@ const Home = ({ user }) => {
   };
 
   const deleteComment = (postId, commentId) => {
-    console.log(postId, commentId);
+    // console.log(postId, commentId);
     fetch(`/deletecomment/${postId}/${commentId}`, {
       method: "delete",
       headers: {
@@ -116,31 +117,22 @@ const Home = ({ user }) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log("Data is ", data);
-        console.log("res is ", result);
-        // console.log("Data is ", data.comments);
-        // console.log("dleete comm ", result);
-        // console.log("dleete comm ", result.comments);
-
+        // console.log("Data ", data);
+        // console.log("res ", result);
         const newData = data.map((item) => {
-          console.log("item comments ", item.comments);
-          if (item._id == postId) {
-            item = result;
-            console.log(item == result);
+          // console.log("item comments ", item.comments);
+          if (item._id === postId) {
+            var commentss = item.comments.filter((comment) => {
+              return comment._id !== commentId;
+            });
+
+            item.comments = commentss;
           }
+
+          return item;
         });
 
         setData(newData);
-        // const newData = data.map((item) => {
-        //   if (item._id == result._id) {
-        //     return result;
-        //   } else return item;
-        // });
-        // setData(newData);
-        // const newData = data.filter((item) => {
-        //   return item._id !== result._id;
-        // });
-        // setData(newData);
       })
       .catch((err) => console.log(err));
   };

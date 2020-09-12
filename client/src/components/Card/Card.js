@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import classes from "./Card.module.css";
 
 const Card = ({
@@ -18,7 +18,7 @@ const Card = ({
           alt="userPic"
         />
         <h6>{data.postedBy.name}</h6>
-        {user == data.postedBy._id && (
+        {user === data.postedBy._id && (
           <div className={classes.delete} onClick={() => deletePost(data._id)}>
             <i className="material-icons" style={{ float: "right" }}>
               delete
@@ -66,7 +66,7 @@ const Card = ({
                   {comment.postedBy.name}
                 </span>{" "}
                 {comment.text}
-                {user == comment.postedBy._id && (
+                {user === comment.postedBy._id && (
                   <i
                     style={{
                       fontSize: "15px",
