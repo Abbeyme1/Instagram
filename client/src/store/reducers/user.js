@@ -9,6 +9,13 @@ const reducer = (state = initialState, action) => {
     case actionTypes.CLEAR:
       return null;
 
+    case actionTypes.UPDATE:
+      return {
+        ...state,
+        followers: action.payload.followers,
+        following: action.payload.following,
+      };
+
     default:
       return state;
   }

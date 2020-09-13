@@ -36,3 +36,14 @@
   width: 30%;
   display: inline;
 }
+
+.btn {
+  background-color: #0095f6;
+  border: none;
+  color: white;
+  width: 258px !important;
+  height: 30px !important;
+  margin-top: 10px;
+  border-radius: 3px;
+  font-weight: 500;
+}

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar";
 import classes from "./userprofile.module.css";
 import { useParams } from "react-router-dom";
-import { compose } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../../../store/actions/index";
 
-const UserProfile = () => {
+const UserProfile = ({ onUpdate }) => {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
+
+  // console.log(user);
 
   useEffect(() => {
     fetch(`/user/${userId}`, {
@@ -19,6 +22,37 @@ const UserProfile = () => {
         setUser(result);
       });
   }, []);
+
+  const followUser = () => {
+    fetch("/follow", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        followId: userId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+
+        console.log("user is ", user);
+        onUpdate(data.following, data.followers);
+
+        localStorage.setItem("user", JSON.stringify(data));
+        setUser((prevState) => {
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: [...prevState.user.followers, data._id],
+            },
+          };
+        });
+      });
+  };
 
   return (
     <div>
@@ -42,8 +76,16 @@ const UserProfile = () => {
                   <p>{user.user.email}</p>
                   <div className={classes.info}>
                     <h6>{user.posts.length} Posts</h6>
-                    <h6>40 followers</h6>
-                    <h6>40 following</h6>
+                    <h6>{user.user.followers.length} followers</h6>
+                    <h6>{user.user.following.length} following</h6>
+                  </div>
+                  <div>
+                    <button
+                      className={classes.btn}
+                      onClick={() => followUser()}
+                    >
+                      Follow
+                    </button>
                   </div>
                 </div>
               </div>
@@ -66,4 +108,16 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUpdate: (following, followers) =>
+      dispatch(
+        actionCreators.update({
+          following: following,
+          followers: followers,
+        })
+      ),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(UserProfile);
