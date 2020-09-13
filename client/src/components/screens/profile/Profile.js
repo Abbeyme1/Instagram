@@ -33,7 +33,7 @@ const Profile = ({ user }) => {
           <div>
             <h4>{user ? user.name : ""}</h4>
             <div className={classes.info}>
-              <h6>40 Posts</h6>
+              <h6>{user ? posts.length : ""} Posts</h6>
               <h6>40 followers</h6>
               <h6>40 following</h6>
             </div>

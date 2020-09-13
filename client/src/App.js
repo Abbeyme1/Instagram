@@ -8,6 +8,7 @@ import Signup from "./components/screens/signup/Signup";
 import CreatePost from "./components/screens/createPost/createPost";
 import { connect } from "react-redux";
 import * as actionCreators from "./store/actions/index";
+import UserProfile from "./components/screens/userProfile/userProfile";
 
 const App = ({ getUser }) => {
   const history = useHistory();
@@ -23,10 +24,11 @@ const App = ({ getUser }) => {
 
   return (
     <Switch>
-      <Route path="/profile" component={Profile} />
+      <Route path="/profile" exact component={Profile} />
       <Route path="/signup" component={Signup} />
       <Route path="/signin" component={Signin} />
       <Route path="/create" component={CreatePost} />
+      <Route path="/profile/:userId" component={UserProfile} />
       <Route path="/" exact component={Home} />
       <Redirect to="/" />
     </Switch>

@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./Card.module.css";
+import { Link, NavLink } from "react-router-dom";
 
 const Card = ({
   data,
@@ -17,7 +18,15 @@ const Card = ({
           src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
           alt="userPic"
         />
-        <h6>{data.postedBy.name}</h6>
+        <Link
+          to={
+            user !== data.postedBy._id
+              ? `/profile/${data.postedBy._id}`
+              : "/profile"
+          }
+        >
+          {data.postedBy.name}
+        </Link>
         {user === data.postedBy._id && (
           <div className={classes.delete} onClick={() => deletePost(data._id)}>
             <i className="material-icons" style={{ float: "right" }}>
