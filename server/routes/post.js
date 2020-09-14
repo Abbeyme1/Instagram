@@ -153,4 +153,15 @@ router.delete("/deletecomment/:postId/:commentId", requireLogin, (req, res) => {
     });
 });
 
+router.get("/followersPost", requireLogin, (req, res) => {
+  Post.find({
+    postedBy: {
+      $in: req.user.following,
+    },
+  })
+    .populate("postedBy", "_id name") //jo hme json aayega usme postedBy hoga usme bs ye ye vals chahiyea hme// immportant
+    .populate("comments.postedBy", "_id name") // immportant
+    .then((posts) => res.json({ posts }))
+    .catch((err) => console.log(err));
+});
 module.exports = router;

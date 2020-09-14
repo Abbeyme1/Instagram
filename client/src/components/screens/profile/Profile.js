@@ -32,10 +32,11 @@ const Profile = ({ user }) => {
           </div>
           <div>
             <h4>{user ? user.name : ""}</h4>
+            <p>{user ? user.email : ""}</p>
             <div className={classes.info}>
               <h6>{user ? posts.length : ""} Posts</h6>
-              <h6>40 followers</h6>
-              <h6>40 following</h6>
+              <h6>{user ? user.followers.length : ""} followers</h6>
+              <h6>{user ? user.following.length : ""} following</h6>
             </div>
           </div>
         </div>

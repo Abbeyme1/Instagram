@@ -69,10 +69,10 @@ router.put("/unfollow", requireLogin, (req, res) => {
         {
           new: true,
         }
-          .select("-password")
-          .then((result) => res.json(result))
-          .catch((err) => res.status(422).json({ error: err }))
-      );
+      )
+        .select("-password")
+        .then((result) => res.json(result))
+        .catch((err) => res.status(422).json({ error: err }));
     }
   );
 });

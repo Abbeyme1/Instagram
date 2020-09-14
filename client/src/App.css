@@ -21,3 +21,7 @@ input:focus {
   right: 20px !important;
   left: auto !important;
 }
+
+button:focus {
+  background-color: none !important;
+}

@@ -3,12 +3,12 @@ import Card from "../../Card/Card";
 import Navbar from "../../Navbar/Navbar";
 import { connect } from "react-redux";
 
-const Home = ({ user }) => {
+const AllPostsHome = ({ user }) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     // console.log("[home]");
-    fetch("/followersPost", {
+    fetch("/allposts", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -168,4 +168,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(AllPostsHome);

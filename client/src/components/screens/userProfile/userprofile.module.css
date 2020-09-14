@@ -1,30 +1,39 @@
 .profile {
-  max-width: 90%;
+  max-width: 60%;
   margin: 0 auto;
 }
 
 .profileInfo {
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   margin: 18px 0;
   padding-bottom: 30px;
   border-bottom: 1.5px solid rgba(173, 173, 173, 0.3);
 }
 
 .profileImage {
-  height: 160px;
-  width: 160px;
+  height: 200px;
+  width: 200px;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .info {
   display: flex;
-  justify-content: space-between;
-  width: 123%;
+  justify-content: start;
+  width: 200%;
+}
+
+.imageBox {
+  margin-left: 20%;
+}
+
+.infoBox {
+  margin-left: 20%;
 }
 
 .gallery {
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
@@ -33,11 +42,12 @@
 }
 .gallery img {
   margin: 2px;
-  width: 30%;
+  width: 20%;
   display: inline;
 }
 
-.btn {
+.btnFollow,
+.btnFollow:focus {
   background-color: #0095f6;
   border: none;
   color: white;
@@ -47,3 +57,29 @@
   border-radius: 3px;
   font-weight: 500;
 }
+
+.btnUnfollow,
+.btnUnfollow:focus {
+  background-color: white;
+  border: 1px solid rgba(219, 219, 219) !important;
+  color: black;
+  width: 258px !important;
+  height: 30px !important;
+  margin-top: 10px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+/* @media screen and (max-width: 540px) {
+  .profile {
+    max-width: 85%;
+    margin: 0 auto;
+  }
+} */
+
+/* @media screen and (min-width: 540px) and (max-width: 780px) {
+  .profile {
+    max-width: 85%;
+    margin: 0 auto;
+  }
+} */

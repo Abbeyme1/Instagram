@@ -25,6 +25,9 @@ const Navbar = ({ user, onLogout }) => {
         <li key="create">
           <Link to="/create">Create Post</Link>
         </li>,
+        <li key="showfollowPosts">
+          <Link to="/explore">Explore</Link>
+        </li>,
         <li key="logout">
           <Link to="#" onClick={logout} className={classes.logout}>
             Logout
