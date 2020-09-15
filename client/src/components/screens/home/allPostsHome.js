@@ -143,6 +143,7 @@ const AllPostsHome = ({ user }) => {
       {Object.keys(data).map((item) => {
         return (
           <Card
+            profilePic={data[item].postedBy.profilePic}
             user={user._id}
             data={data[item]}
             key={data[item]._id}

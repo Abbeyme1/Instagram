@@ -2,9 +2,47 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../Navbar/Navbar";
 import classes from "./profile.module.css";
 import { connect } from "react-redux";
+import * as actionCreators from "../../../store/actions/index";
 
-const Profile = ({ user }) => {
+const Profile = ({ user, onUploadPic }) => {
   const [posts, setPosts] = useState([]);
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    if (image) {
+      const data = new FormData();
+      data.append("file", image);
+      data.append("upload_preset", "instagram");
+      data.append("cloud_name", "abbeyme");
+      fetch("https://api.cloudinary.com/v1_1/abbeyme/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          fetch("/updatepic", {
+            method: "put",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + localStorage.getItem("jwt"),
+            },
+            body: JSON.stringify({
+              profilePic: data.url,
+            }),
+          })
+            .then((res) => res.json())
+            .then((result) => {
+              console.log(result);
+              localStorage.setItem(
+                "user",
+                JSON.stringify({ ...user, profilePic: result.profilePic })
+              );
+              onUploadPic(result.profilePic);
+            });
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [image]);
 
   useEffect(() => {
     fetch("/mypost", {
@@ -18,6 +56,21 @@ const Profile = ({ user }) => {
       });
   }, []);
 
+  const uploadProfilePic = (image) => {
+    setImage(image);
+  };
+
+  const chooseImage = () => {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.onchange = (e) => {
+      var file = e.target.files[0];
+      uploadProfilePic(file);
+    };
+
+    input.click();
+  };
+
   return (
     <div>
       <Navbar />
@@ -26,8 +79,9 @@ const Profile = ({ user }) => {
           <div>
             <img
               className={classes.profileImage}
-              src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+              src={user && user.profilePic}
               alt="profile-pic"
+              onClick={chooseImage}
             />
           </div>
           <div>
@@ -37,6 +91,9 @@ const Profile = ({ user }) => {
               <h6>{user ? posts.length : ""} Posts</h6>
               <h6>{user ? user.followers.length : ""} followers</h6>
               <h6>{user ? user.following.length : ""} following</h6>
+            </div>
+            <div>
+              <button className={classes.editProfile}>Edit profile</button>
             </div>
           </div>
         </div>
@@ -62,4 +119,11 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUploadPic: (profilePic) =>
+      dispatch(actionCreators.uploadPic({ profilePic: profilePic })),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

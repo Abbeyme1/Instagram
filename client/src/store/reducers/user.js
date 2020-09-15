@@ -16,6 +16,12 @@ const reducer = (state = initialState, action) => {
         following: action.payload.following,
       };
 
+    case actionTypes.UPLOAD_PIC:
+      return {
+        ...state,
+        profilePic: action.payload.profilePic,
+      };
+
     default:
       return state;
   }

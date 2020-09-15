@@ -36,3 +36,15 @@
   width: 30%;
   display: inline;
 }
+
+.editProfile,
+.editProfile:focus {
+  background-color: white;
+  border: 1px solid rgba(219, 219, 219) !important;
+  color: black;
+  width: 258px !important;
+  height: 30px !important;
+  margin-top: 10px;
+  border-radius: 3px;
+  font-weight: 500;
+}

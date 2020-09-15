@@ -19,3 +19,10 @@ export const update = (data) => {
     payload: data,
   };
 };
+
+export const uploadPic = (data) => {
+  return {
+    type: actionTypes.UPLOAD_PIC,
+    payload: data,
+  };
+};

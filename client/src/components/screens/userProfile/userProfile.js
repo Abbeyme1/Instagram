@@ -39,9 +39,6 @@ const UserProfile = ({ onUpdate, mainUser }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-
-        console.log("user is ", user);
         onUpdate(data.following, data.followers);
 
         localStorage.setItem("user", JSON.stringify(data));
@@ -89,7 +86,6 @@ const UserProfile = ({ onUpdate, mainUser }) => {
         setShowFollow(true);
       });
   };
-
   return (
     <div>
       <>
@@ -103,7 +99,7 @@ const UserProfile = ({ onUpdate, mainUser }) => {
                 <div className={classes.imageBox}>
                   <img
                     className={classes.profileImage}
-                    src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                    src={user && user.user.profilePic}
                     alt="profile-pic"
                   />
                 </div>
