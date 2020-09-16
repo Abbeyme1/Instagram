@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import classes from "./login.module.css";
 import { Link, useHistory } from "react-router-dom";
 import M from "materialize-css";
-import { connect } from 'react-redux';
-import * as actionCreators from '../../../store/actions/index';
+import { connect } from "react-redux";
+import * as actionCreators from "../../../store/actions/index";
 
 const Login = ({ getUser }) => {
   const history = useHistory();
@@ -84,7 +84,9 @@ const Login = ({ getUser }) => {
           <div className={classes.line}></div>
         </div>
 
-        <Link className={classes.forgotPassword}>Forgot password?</Link>
+        <Link className={classes.forgotPassword} to="/reset">
+          Forgot password?
+        </Link>
       </div>
       <div className={classes.card2}>
         <p>
@@ -100,9 +102,8 @@ const Login = ({ getUser }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUser: (user) => dispatch(actionCreators.user(user))
-  }
-
-}
+    getUser: (user) => dispatch(actionCreators.user(user)),
+  };
+};
 
 export default connect(null, mapDispatchToProps)(Login);

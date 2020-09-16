@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "./store/actions/index";
 import UserProfile from "./components/screens/userProfile/userProfile";
 import AllPostsHome from "./components/screens/home/allPostsHome";
+import Reset from "./components/screens/reset/reset";
 
 const App = ({ getUser }) => {
   const history = useHistory();
@@ -19,7 +20,8 @@ const App = ({ getUser }) => {
       getUser(user);
       // history.push("/");
     } else {
-      history.push("/signin");
+      if (!history.location.pathname.startsWith("/reset"))
+        history.push("/signin");
     }
   }, []);
 
@@ -31,6 +33,7 @@ const App = ({ getUser }) => {
       <Route path="/create" component={CreatePost} />
       <Route path="/profile/:userId" component={UserProfile} />
       <Route path="/explore" component={AllPostsHome} />
+      <Route path="/reset" component={Reset} />
       <Route path="/" exact component={Home} />
       <Redirect to="/" />
     </Switch>
