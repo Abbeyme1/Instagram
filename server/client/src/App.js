@@ -11,6 +11,7 @@ import * as actionCreators from "./store/actions/index";
 import UserProfile from "./components/screens/userProfile/userProfile";
 import AllPostsHome from "./components/screens/home/allPostsHome";
 import Reset from "./components/screens/reset/reset";
+import NewPassword from "./components/screens/NewPassword/NewPassword";
 
 const App = ({ getUser }) => {
   const history = useHistory();
@@ -33,7 +34,8 @@ const App = ({ getUser }) => {
       <Route path="/create" component={CreatePost} />
       <Route path="/profile/:userId" component={UserProfile} />
       <Route path="/explore" component={AllPostsHome} />
-      <Route path="/reset" component={Reset} />
+      <Route path="/reset" exact component={Reset} />
+      <Route path="/reset/:token" component={NewPassword} />
       <Route path="/" exact component={Home} />
       <Redirect to="/" />
     </Switch>
