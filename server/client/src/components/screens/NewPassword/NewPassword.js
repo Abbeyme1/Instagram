@@ -11,13 +11,14 @@ const NewPassword = ({ getUser }) => {
   console.log(token);
 
   const postData = () => {
-    fetch("/signin", {
+    fetch("/new-password", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         password,
+        token,
       }),
     })
       .then((res) => res.json())
@@ -51,7 +52,7 @@ const NewPassword = ({ getUser }) => {
         />
 
         <button className={classes.btn} onClick={() => postData()}>
-          Log In
+          Change Password
         </button>
       </div>
     </div>

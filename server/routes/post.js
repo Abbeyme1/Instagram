@@ -9,6 +9,7 @@ router.get("/allposts", requireLogin, (req, res) => {
   Post.find()
     .populate("postedBy", "_id name profilePic") //jo hme json aayega usme postedBy hoga usme bs ye ye vals chahiyea hme// immportant
     .populate("comments.postedBy", "_id name") // immportant
+    .sort("-createdAt")
     .then((posts) => res.json({ posts }))
     .catch((err) => console.log(err));
 });
@@ -161,6 +162,7 @@ router.get("/followersPost", requireLogin, (req, res) => {
   })
     .populate("postedBy", "_id name profilePic") //jo hme json aayega usme postedBy hoga usme bs ye ye vals chahiyea hme// immportant
     .populate("comments.postedBy", "_id name") // immportant
+    .sort("-createdAt")
     .then((posts) => res.json({ posts }))
     .catch((err) => console.log(err));
 });

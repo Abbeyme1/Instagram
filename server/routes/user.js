@@ -89,4 +89,17 @@ router.put("/updatepic", requireLogin, (req, res) => {
     }
   );
 });
+
+router.post("/search-user", (req, res) => {
+  const user = new RegExp("^" + req.body.query);
+  User.find({ name: { $regex: user } })
+    .select("_id name profilePic")
+    .then((user) => {
+      res.json({ user });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 module.exports = router;

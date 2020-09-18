@@ -114,4 +114,27 @@ router.post("/reset-password", (req, res) => {
     });
   });
 });
+
+router.post("/new-password", (req, res) => {
+  const newPassword = req.body.password;
+  const token = req.body.token;
+
+  User.findOne({ resetToken: token, expireToken: { $gt: Date.now() } })
+    .then((user) => {
+      if (!user) {
+        return res.status(422).json({ error: "Oops! Session Expire" });
+      }
+
+      bcrypt.hash(newPassword, 10).then((hash) => {
+        user.password = hash;
+        user.resetToken = undefined;
+        user.expireToken = undefined;
+        user.save((savedUser) => {
+          res.json({ message: "Successfully update password" });
+        });
+      });
+    })
+    .catch((err) => console.log(err));
+});
+
 module.exports = router;
