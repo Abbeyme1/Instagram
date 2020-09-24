@@ -20,6 +20,13 @@ export const update = (data) => {
   };
 };
 
+export const updateDetails = (data) => {
+  return {
+    type: actionTypes.UPDATE_DETAILS,
+    payload: data,
+  };
+};
+
 export const uploadPic = (data) => {
   return {
     type: actionTypes.UPLOAD_PIC,

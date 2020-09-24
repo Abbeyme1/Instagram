@@ -3,6 +3,7 @@ import Navbar from "../../Navbar/Navbar";
 import classes from "./profile.module.css";
 import { connect } from "react-redux";
 import * as actionCreators from "../../../store/actions/index";
+import { NavLink } from "react-router-dom";
 
 const Profile = ({ user, onUploadPic }) => {
   const [posts, setPosts] = useState([]);
@@ -87,13 +88,16 @@ const Profile = ({ user, onUploadPic }) => {
           <div>
             <h4>{user ? user.name : ""}</h4>
             <p>{user ? user.email : ""}</p>
+            <p>{user ? user.bio : ""}</p>
             <div className={classes.info}>
               <h6>{user ? posts.length : ""} Posts</h6>
               <h6>{user ? user.followers.length : ""} followers</h6>
               <h6>{user ? user.following.length : ""} following</h6>
             </div>
             <div>
-              <button className={classes.editProfile}>Edit profile</button>
+              <NavLink to="/edit">
+                <button className={classes.editProfile}>Edit profile</button>
+              </NavLink>
             </div>
           </div>
         </div>

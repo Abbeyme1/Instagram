@@ -102,4 +102,18 @@ router.post("/search-user", (req, res) => {
     });
 });
 
+router.put("/editDetails", requireLogin, (req, res) => {
+  console.log(req.body.bio);
+  User.findByIdAndUpdate(
+    req.user._id,
+    { $set: { name: req.body.name, bio: req.body.bio } },
+    { new: true }
+  )
+    .then((user) => {
+      console.log(user);
+      res.json({ user });
+    })
+    .catch((err) => console.log(err));
+});
+
 module.exports = router;

@@ -1,1 +1,1 @@
-export { user, clear, update, uploadPic } from "./user";
+export { user, clear, update, uploadPic, updateDetails } from "./user";

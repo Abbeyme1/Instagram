@@ -22,6 +22,14 @@ const reducer = (state = initialState, action) => {
         profilePic: action.payload.profilePic,
       };
 
+    case actionTypes.UPDATE_DETAILS: {
+      return {
+        ...state,
+        name: action.payload.name,
+        bio: action.payload.bio,
+      };
+    }
+
     default:
       return state;
   }
